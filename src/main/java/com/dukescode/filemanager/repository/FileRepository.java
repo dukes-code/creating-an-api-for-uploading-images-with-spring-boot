@@ -1,5 +1,9 @@
 package com.dukescode.filemanager.repository;
 
-public class FileRepository {
-    
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.dukescode.filemanager.model.FileEntity;
+
+@Repository
+public interface FileRepository extends JpaRepository<FileEntity, String> {
 }

@@ -5,16 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.RequiredArgsConstructor;
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode
 @Entity
 @Table(name = "files")
@@ -24,11 +19,10 @@ public class FileEntity {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String name;
-    private String contentType;
-    private Long size;
+    private final String name;
+    private final String contentType;
+    private final Long size;
 
     @Lob
-    private byte[] data;
-
+    private final byte[] data;
 }

@@ -1,4 +1,5 @@
 package com.dukescode.filemanager.model;
+
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,9 +8,14 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Getter
+@Setter
 @RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 @EqualsAndHashCode
 @Entity
 @Table(name = "files")

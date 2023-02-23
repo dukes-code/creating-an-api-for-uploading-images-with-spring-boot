@@ -5,7 +5,6 @@ spring:
   jpa:
     properties:
       hibernate:
-        formatSql: true
         jdbc:
           lob:
             non-contextual-creation: true
@@ -14,7 +13,6 @@ spring:
           sharedCache:
             mode: UNSPECIFIED
     databasePlatform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
     hibernate:
       ddlAuto: update
       naming:

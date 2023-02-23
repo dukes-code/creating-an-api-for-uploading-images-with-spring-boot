@@ -1,6 +1,9 @@
 package com.dukescode.filemanager.controller;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,26 +28,23 @@ import com.dukescode.filemanager.model.FileEntity;
 @CrossOrigin("http://localhost:8001")
 public class FileController {
 
+  private static final ZoneId BRAZIL_TIMEZONE = ZoneId.of("America/Sao_Paulo");
+
   @Autowired
   private FileService fileService;
 
   @PostMapping("/upload")
-  public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+  public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file)
+      throws IOException {
 
-    String message = "";
+    fileService.store(file);
+    String message = "Uploaded the file successfully: " + file.getOriginalFilename();
 
-    try {
-      fileService.store(file);
+    final MessageResponse messageResponse =
+        new MessageResponse(LocalDateTime.now(BRAZIL_TIMEZONE).toString(),
+            HttpStatus.CREATED.value(), message, file.getOriginalFilename(), file.getContentType());
 
-      message = "Uploaded the file successfully: " + file.getOriginalFilename();
-      return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
-
-    } catch (Exception e) {
-
-      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
-
-    }
+    return ResponseEntity.status(HttpStatus.CREATED).body(messageResponse);
   }
 
   @GetMapping("/files")
@@ -52,17 +52,11 @@ public class FileController {
 
     List<FileResponse> files = fileService.getAllFiles().map(fileFromDatabase -> {
 
-      String fileDownloadUri = ServletUriComponentsBuilder
-          .fromCurrentContextPath()
-          .path("/files/")
-          .path(fileFromDatabase.getId())
-          .toUriString();
+      String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
+          .path(fileFromDatabase.getId()).toUriString();
 
-      return new FileResponse(
-          fileFromDatabase.getName(),
-          fileDownloadUri,
-          fileFromDatabase.getContentType(),
-          fileFromDatabase.getData().length);
+      return new FileResponse(fileFromDatabase.getName(), fileDownloadUri,
+          fileFromDatabase.getContentType(), fileFromDatabase.getData().length);
 
     }).collect(Collectors.toList());
 
@@ -71,12 +65,12 @@ public class FileController {
 
   @GetMapping("/files/{id}")
   public ResponseEntity<byte[]> getFile(@PathVariable String id) throws FileNotFoundException {
-    
+
     FileEntity fileFromDatabase = fileService.getFile(id);
 
     return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileFromDatabase.getName() + "\"")
+        .header(HttpHeaders.CONTENT_DISPOSITION,
+            "attachment; filename=\"" + fileFromDatabase.getName() + "\"")
         .body(fileFromDatabase.getData());
   }
-  
 }

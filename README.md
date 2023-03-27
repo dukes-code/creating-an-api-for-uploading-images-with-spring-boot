@@ -50,7 +50,7 @@ By the conclusion of this article, we will have successfully generated a REST AP
   `$ git clone https://github.com/dukes-code/creating-an-api-for-uploading-images-with-spring-boot.git`
 
 - After cloning, enter the cloned repository directory:</br>
-  `$ cd https://github.com/dukes-code/creating-an-api-for-uploading-images-with-spring-boot.git`
+  `$ cd creating-an-api-for-uploading-images-with-spring-boot`
 
 - Once being inside the directory, download and install the dependencies using:</br>
   `$ mvn install`

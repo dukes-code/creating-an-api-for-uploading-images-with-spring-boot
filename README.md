@@ -68,7 +68,7 @@ By the conclusion of this article, we will have successfully generated a REST AP
 - <a href="https://www.linkedin.com/in/dukefullstack/" target="_blank">LinkedIn</a>
 - <a href="https://www.youtube.com/@DukesCode" target="_blank">Youtube</a>
 - <a href="https://twitter.com/dukefullstack" target="_blank">Twitter</a>
-- <a href="https://dukescode.com?utm_source=github&utm_medium=page&ref=github" target="_blank">Duke's Code</a>
+- <a href="https://dukescode.com" target="_blank">Duke's Code</a>
 - <a href="https://www.instagram.com/dukefullstack/" target="_blank">Instagram</a>
 
 Made with :heart: by <a href="https://www.linkedin.com/in/dukefullstack/">**Thiago Santos Joaquim**</a>. MIT License
